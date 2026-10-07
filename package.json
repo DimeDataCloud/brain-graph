@@ -1,0 +1,20 @@
+{
+  "name": "brain-graph",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A Neo4j index over a markdown vault of wikilinked notes, plus a read-only MCP server to query it.",
+  "license": "MIT",
+  "scripts": {
+    "dry": "node graph-sync.mjs --dry-run",
+    "sync": "node --env-file=.env graph-sync.mjs",
+    "verify": "node verify.mjs",
+    "mcp": "node mcp-server.mjs",
+    "up": "docker compose --env-file .env up -d",
+    "down": "docker compose down"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "neo4j-driver": "^5.28.0"
+  }
+}

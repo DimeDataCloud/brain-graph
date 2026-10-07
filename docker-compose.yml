@@ -1,0 +1,39 @@
+# The vault's derived graph index.
+#
+# Keep GRAPH_DATA_DIR OUTSIDE any folder a sync client (Google Drive, Dropbox, OneDrive)
+# watches. A sync client uploading a database's page files mid-write is a corruption
+# waiting to happen, and the graph is rebuildable from markdown in seconds, so it does not
+# need syncing anyway.
+#
+#   docker compose --env-file .env up -d
+#   browser UI: http://localhost:7474   (user neo4j, password from .env)
+
+services:
+  brain-graph:
+    image: neo4j:5-community
+    container_name: brain-graph
+    ports:
+      - "7474:7474"   # HTTP browser
+      - "7687:7687"   # bolt
+    environment:
+      NEO4J_AUTH: neo4j/${NEO4J_PASSWORD:?set NEO4J_PASSWORD in .env}
+      NEO4J_PLUGINS: '["apoc"]'
+      # graph-sync sets one label per node dynamically, which plain Cypher cannot do.
+      NEO4J_dbms_security_procedures_unrestricted: apoc.*
+      NEO4J_dbms_security_procedures_allowlist: apoc.*
+      # A single-user local index on a laptop that is usually short on RAM. Defaults
+      # assume a server and will happily reserve more heap than a laptop can spare.
+      NEO4J_server_memory_heap_initial__size: 512m
+      NEO4J_server_memory_heap_max__size: 1G
+      NEO4J_server_memory_pagecache_size: 512m
+    volumes:
+      - ${GRAPH_DATA_DIR:-./.neo4j}/data:/data
+      - ${GRAPH_DATA_DIR:-./.neo4j}/logs:/logs
+      - ${GRAPH_DATA_DIR:-./.neo4j}/import:/import
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 40s

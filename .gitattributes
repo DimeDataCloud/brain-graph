@@ -1,0 +1,4 @@
+# Stored byte-for-byte. This fixture has CRLF line endings on purpose: verify.mjs
+# asserts the frontmatter parser handles them, and git normalisation would quietly
+# turn it into an LF file and make that assertion test nothing.
+example-vault/builds/example-app.md -text
