@@ -117,6 +117,10 @@ a note in another.
   checked out on Windows gave different answers than on Linux. `verify.mjs` checks that
   both line endings parse identically, and `.gitattributes` keeps the CRLF fixture CRLF.
 
+## Rating
+
+[![M8ven Score](https://m8ven.ai/badge/mcp/dimedatacloud-brain-graph-15wifc?v=16d78c65ec176a33a488d9b555615df9)](https://m8ven.ai/mcp/dimedatacloud-brain-graph-15wifc?s=readme)
+
 ## License
 
 MIT. Built by [Dime Data](https://dimedata.cloud).
