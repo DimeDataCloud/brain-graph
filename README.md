@@ -28,7 +28,7 @@ Requires Node 20.6 or newer (for `--env-file`) and Docker.
 
 ```bash
 npm install
-npm run verify        # 26 assertions against the bundled example-vault/
+npm run verify        # assertions against the bundled example-vault/
 npm run dry           # parse example-vault/ and print the report. No database needed.
 ```
 
@@ -154,7 +154,7 @@ brain-graph/
 npm run verify
 ```
 
-`verify.mjs` runs 26 assertions against `example-vault/`, covering parsing, link resolution, LF and CRLF
+`verify.mjs` runs its assertions against `example-vault/`, covering parsing, link resolution, LF and CRLF
 handling and the report. It does not need a running Neo4j instance.
 
 ## Contributing
